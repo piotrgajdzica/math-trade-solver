@@ -1,7 +1,6 @@
-from graph_parser import *
-from ilp import build_ilp, solve
+from solver.graph_parser import *
+from solver.ilp import build_ilp, solve
 import time
-
 
 def print_time(t, message):
     now = time.time()
@@ -12,7 +11,7 @@ def print_time(t, message):
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--filename", type=str,
-                    help="increase output verbosity", default="mathandel_30.txt")
+                    help="increase output verbosity", default="example_preferences/mathandel_30.txt")
 args = parser.parse_args()
 
 start = time.time()
