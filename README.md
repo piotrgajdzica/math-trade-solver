@@ -8,7 +8,7 @@ Solver for Math Trade problem
 
 Python 3
 
-## Installation
+## Dependencies Installation
 
 ```
 pip install pulp
