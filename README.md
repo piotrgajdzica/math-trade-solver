@@ -10,10 +10,13 @@ Python 3
 
 ## Installation
 
+```
 pip install pulp
+```
 
 ## Usage
 
+```
 python trade_solver.py [-h] [-f FILENAME] [-v {0,1,2}]
 
 optional arguments:
@@ -22,3 +25,4 @@ optional arguments:
                         trade preferences file
   -v {0,1,2}, --verbosity {0,1,2}
                         increase output verbosity
+```
