@@ -2,7 +2,8 @@
 
 ## Description
 
-Solver for Math Trade problem
+Solver for Math Trade problem. As input it takes a file with list of preferences link in example
+and returns list of preferences to output file.
 
 ## Requirements
 
