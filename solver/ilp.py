@@ -36,16 +36,7 @@ def build_ilp(G):
 
 def solve(model):
 
-    # choose an algorithm to solve
-    model.solve()
-    # these require installation
-    # model.solve(GLPK())
+    # model.solve()
+    model.solve(GLPK())
     # model.solve(CPLEX())
-
-    # print(LpStatus[model.status])
-    #
-    # print(value(model.objective))
-    #
-    # print(LpStatus[model.status])
-
     return model
