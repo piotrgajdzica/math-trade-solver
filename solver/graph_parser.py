@@ -17,6 +17,7 @@ def parse(filename):
     exchanges = {}
     groups = {}
     deep_groups = {}
+    user_map = {}
     for line in lines:
         try:
             username, exchange = line.split(")")
@@ -28,6 +29,7 @@ def parse(filename):
                     else:
                         groups[username + id] = list(map(lambda el: username + el if "%" in el else el, l))
                 else:
+                    user_map[id] = username[1:]
                     exchanges[id] = list(map(lambda el: username + el if not el.isdigit() else el, l))
         except ValueError:
             pass
@@ -54,7 +56,7 @@ def parse(filename):
     for key in exchanges.keys():
         res += str(key) + "\n"
         res += reduce(lambda acc, next: str(acc) + " " + str(next), exchanges[key], "")[1:] + "\n"
-    return res
+    return res, user_map
 
 
 def build_graph(input):

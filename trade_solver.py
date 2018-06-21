@@ -13,7 +13,7 @@ def print_time(t, message, verbosity):
 
 def solve_trade(filename, verbosity):
     start = time.time()
-    string_graph = parse(filename)
+    string_graph, user_map = parse(filename)
     t = print_time(start, "parsing graph", verbosity)
     G = build_graph(string_graph)
     t = print_time(t, "building graph", verbosity)
@@ -32,13 +32,14 @@ def solve_trade(filename, verbosity):
             _, vertex1, vertex2 = var.name.split("_")
             d[vertex1] = vertex2
 
-    if verbosity >= 1:
-        for key in filter(lambda el: int(el) < 100000, d.keys()):
-            el = d[key]
-            while int(el) > 100000:
-                el = d[el]
-            print(key + " receives " + el)
-
+    output = open(filename.split(".")[0] + "_output.txt", 'w')
+    for key in filter(lambda el: int(el) < 100000, d.keys()):
+        el = d[key]
+        while int(el) > 100000:
+            el = d[el]
+        if verbosity >= 1:
+            print(user_map[key] + " receives " + el + " from " + user_map[el])
+        output.write(user_map[key] + " receives " + el + " from " + user_map[el] + "\n")
     return model
 
 
