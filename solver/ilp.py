@@ -1,12 +1,12 @@
-
-
-from functools import reduce
 from pulp import *
 from collections import defaultdict
+import solver.settings as settings
+from collections import defaultdict
+
+from pulp import *
 
 
 def build_ilp(G):
-
     model = LpProblem("solver", LpMaximize)
 
     vertex_in = defaultdict(lambda: None)
@@ -20,7 +20,7 @@ def build_ilp(G):
             vertex_in[vertex2] += e
             vertex_diff[vertex1] += e
             vertex_diff[vertex2] -= e
-            if vertex2 < 100000:
+            if vertex2.startswith(settings.element_prefix):
                 max_sum += e
 
     for vertex in G.keys():
@@ -34,8 +34,8 @@ def build_ilp(G):
 
     return model
 
-def solve(model):
 
+def solve(model):
     # model.solve()
     model.solve(GLPK())
     # model.solve(CPLEX())

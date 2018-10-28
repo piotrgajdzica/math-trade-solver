@@ -17,6 +17,7 @@ pip install pulp
 
 ## Usage
 
+from command line:
 ```
 python trade_solver.py [-h] [-f FILENAME] [-v {0,1,2}]
 
@@ -27,3 +28,9 @@ optional arguments:
   -v {0,1,2}, --verbosity {0,1,2}
                         increase output verbosity
 ```
+as a server:
+```
+pip install flask
+flask run
+```
+server will be deployed on http://127.0.0.1:5000/

@@ -66,11 +66,11 @@ def build_graph(input):
     vertex_id = None
     for line in input.split("\n"):
         if vertex and line:
-            vertex_id = int(line)
+            vertex_id = line
         elif vertex:
             continue
         elif line:
-            res[vertex_id] = set(map(lambda el: int(el), line.split(" ")))
+            res[vertex_id] = set(map(lambda el: el, line.split(" ")))
         else:
             res[vertex_id] = []
         vertex = not vertex

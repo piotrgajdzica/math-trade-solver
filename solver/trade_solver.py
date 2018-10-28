@@ -12,6 +12,7 @@ def print_time(t, message, verbosity):
 
 
 def solve_trade(filename, verbosity):
+    ret = ""
     start = time.time()
     string_graph, user_map = parse(filename)
     t = print_time(start, "parsing graph", verbosity)
@@ -39,14 +40,15 @@ def solve_trade(filename, verbosity):
             el = d[el]
         if verbosity >= 1:
             print(user_map[key] + " receives " + el + " from " + user_map[el])
+            ret += user_map[key] + " receives " + el + " from " + user_map[el] + "\n"
         output.write(user_map[key] + " receives " + el + " from " + user_map[el] + "\n")
-    return model
+    return ret
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--filename", type=str,
-                        help="trade preferences file", default="example_preferences/mathandel_30.txt")
+                        help="trade preferences file", default=r"C:\Users\piotrek\Desktop\inf\inżynierka\math-trade-solver\example_preferences\mathandel_30.txt")
     parser.add_argument("-v", "--verbosity", type=int, choices=[0, 1, 2],
                         help="increase output verbosity", default=2)
     args = parser.parse_args()
