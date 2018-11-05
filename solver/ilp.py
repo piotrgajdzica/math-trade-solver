@@ -36,7 +36,7 @@ def build_ilp(G):
 
 
 def solve(model):
-    # model.solve()
-    model.solve(GLPK())
+    model.solve()
+    # model.solve(GLPK())
     # model.solve(CPLEX())
     return model
