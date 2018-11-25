@@ -35,6 +35,10 @@ def api_solve():
         ret_json.append({"receiver": key[len(settings.element_prefix):], "sender": el[len(settings.element_prefix):]})
     return json.dumps(ret_json)
 
+@app.route('/', methods=['GET'])
+def hello():
+    return "hello"
+
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
