@@ -1,3 +1,5 @@
+import os
+
 from solver.graph_parser import *
 from solver.ilp import build_ilp, solve
 import time
@@ -18,7 +20,7 @@ def solve_trade(filename, verbosity):
     t = print_time(start, "parsing graph", verbosity)
     G = build_graph(string_graph)
     t = print_time(t, "building graph", verbosity)
-    model = build_ilp(G)
+    model = build_ilp(G, predicate=lambda v: int(v) < 10000)
     t = print_time(t, "building ilp", verbosity)
     result = solve(model)
     t = print_time(t, "solving ilp", verbosity)
@@ -48,8 +50,8 @@ def solve_trade(filename, verbosity):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--filename", type=str,
-                        help="trade preferences file", default=r"C:\Users\piotrek\Desktop\inf\inżynierka\math-trade-solver\example_preferences\mathandel_30.txt")
+                        help="trade preferences file", default=r"../example_preferences\mathandel_29,5.txt")
     parser.add_argument("-v", "--verbosity", type=int, choices=[0, 1, 2],
                         help="increase output verbosity", default=2)
     args = parser.parse_args()
-    solve_trade(args.filename, args.verbosity)
+    solve_trade(os.path.abspath(args.filename), args.verbosity)

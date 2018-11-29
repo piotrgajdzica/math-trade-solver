@@ -6,7 +6,7 @@ from collections import defaultdict
 from pulp import *
 
 
-def build_ilp(G):
+def build_ilp(G, predicate = lambda vertex: vertex.startswith(settings.element_prefix)):
     model = LpProblem("solver", LpMaximize)
 
     vertex_in = defaultdict(lambda: None)
@@ -20,7 +20,7 @@ def build_ilp(G):
             vertex_in[vertex2] += e
             vertex_diff[vertex1] += e
             vertex_diff[vertex2] -= e
-            if vertex2.startswith(settings.element_prefix):
+            if predicate(vertex2):
                 max_sum += e
 
     for vertex in G.keys():
@@ -30,6 +30,7 @@ def build_ilp(G):
             model += vertex_out[vertex] <= 1
         if vertex_diff[vertex]:
             model += vertex_diff[vertex] == 0
+    print(type(max_sum))
     model += max_sum
 
     return model
