@@ -10,10 +10,17 @@ import solver.settings as settings
 
 app = Flask(__name__)
 
-
+secret_token = "MathandelSecret$!"
 @app.route('/solve/', methods=['POST'])
 def api_solve():
 
+    try:
+        token = request.headers['Authorization'].split("Bearer ")[1]
+        print(token)
+        if token != secret_token:
+            return "", 401
+    except (KeyError, IndexError):
+        return "", 401
     string_graph = parse(request.json)
     G = build_graph(string_graph)
     model = build_ilp(G)
