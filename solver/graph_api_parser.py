@@ -1,5 +1,6 @@
 from functools import reduce
 import solver.settings as settings
+from solver.exceptions import ApiException
 
 
 def replace_inner_groups(groups, group, depth, max_depth):
@@ -21,21 +22,29 @@ def replace_inner_groups(groups, group, depth, max_depth):
 
 
 def parse(json):
-    groups = json["named_groups"]
-
+    try:
+        groups = json["named_groups"]
+        preferences = json["preferences"]
+    except KeyError as e:
+        groups = []
+        preferences = []
     for group in groups:
-        replace_inner_groups(groups, group, 0, 3)
+        try:
+            replace_inner_groups(groups, group, 0, 3)
+        except StopIteration:
+            raise ApiException("wrong group id given in named groups")
+    try:
+        res = ""
+        for el in preferences:
+            res += settings.element_prefix + str(el["id"]) + "\n"
+            res += reduce(lambda acc, next: str(acc) + " " + settings.element_prefix + str(next), el["single_preferences"], "")[1:]
+            res += reduce(lambda acc, next: str(acc) + " " + settings.group_prefix + str(next), el["groups"], "") + "\n"
 
-    res = ""
-    for el in json["preferences"]:
-        res += settings.element_prefix + str(el["id"]) + "\n"
-        res += reduce(lambda acc, next: str(acc) + " " + settings.element_prefix + str(next), el["single_preferences"], "")[1:]
-        res += reduce(lambda acc, next: str(acc) + " " + settings.group_prefix + str(next), el["groups"], "") + "\n"
-
-    for el in groups:
-        res += settings.group_prefix + str(el["id"]) + "\n"
-        res += reduce(lambda acc, next: str(acc) + " " + settings.element_prefix + str(next), el["single_preferences"], "")[1:] + "\n"
-
+        for el in groups:
+            res += settings.group_prefix + str(el["id"]) + "\n"
+            res += reduce(lambda acc, next: str(acc) + " " + settings.element_prefix + str(next), el["single_preferences"], "")[1:] + "\n"
+    except KeyError as e:
+        raise ApiException("missing key in json: " + str(e))
     print(res)
     return res
 

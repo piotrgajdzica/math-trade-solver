@@ -30,8 +30,8 @@ def build_ilp(G, predicate = lambda vertex: vertex.startswith(settings.element_p
             model += vertex_out[vertex] <= 1
         if vertex_diff[vertex]:
             model += vertex_diff[vertex] == 0
-    print(type(max_sum))
-    model += max_sum
+    if max_sum is not None:
+        model += max_sum
 
     return model
 

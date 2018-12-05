@@ -50,7 +50,7 @@ def solve_trade(filename, verbosity):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--filename", type=str,
-                        help="trade preferences file", default=r"../example_preferences\mathandel_29,5.txt")
+                        help="trade preferences file", default=r"../example_preferences\mathandel_30_1.txt")
     parser.add_argument("-v", "--verbosity", type=int, choices=[0, 1, 2],
                         help="increase output verbosity", default=2)
     args = parser.parse_args()
